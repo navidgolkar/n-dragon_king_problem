@@ -13,8 +13,7 @@ class DragonKingsSolver:
         print(f"Fundamental solutions: {len(self.fundamental_solutions)}")
         
         print("\nFundamental Solutions:")
-        for solution in sorted(self.fundamental_solutions):
-            print(solution)
+        self.display_fundamental_solutions()
 
     def place_dragon_king(self, board, row):
         if row == self.n:
@@ -43,9 +42,20 @@ class DragonKingsSolver:
             ','.join(map(str, board)),
             ','.join(map(str, reversed(board))),
             ','.join(map(str, [self.n - 1 - x for x in board])),
-            ','.join(map(str, reversed([self.n - 1 - x for x in board])))
+            ','.join(map(str, reversed([self.n - 1 - x for x in board]))),
         ]
         return min(representations)
+
+    def display_fundamental_solutions(self):
+        print()
+        for solution in sorted(self.fundamental_solutions):
+            matrix = [[0] * self.n for _ in range(self.n)]
+            solution_list = list(map(int, solution.split(',')))
+            for i in range(self.n):
+                matrix[i][solution_list[i]] = 1
+            for row in matrix:
+                print(' '.join(map(str, row)))
+            print("--" * self.n)
 
 def main():
     n = int(input("Enter the board size (n): "))
